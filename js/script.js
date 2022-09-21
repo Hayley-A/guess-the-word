@@ -26,7 +26,7 @@ const blankWord = function (word) {
 
 blankWord(word);
 
-/*A click of the button will clear the input field*/
+/*A click of the button*/
 
 guessButton.addEventListener("click", function (e) {
     /*prevent default behavior of clicking a button, the form submitting, and the page reloading*/
@@ -70,16 +70,54 @@ const checkInput = function(input){
     };
 };
 
+/*Add the users guess to an array*/
 const makeGuess = function (letterInput) {
     letterInput = letterInput.toUpperCase();
-
+        /*Check that the users input is not already in the array*/
     if (guessedLetters.includes(letterInput)) {
         message.innerText = "You already guessed that letter. Try again.";
     } else {
+        /*add the checked letter to the end of the array and log out the array*/
         guessedLetters.push(letterInput);
         console.log(guessedLetters);
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
+        
     }
-
 };
 
+/*Show letters as they are guessed*/
+const showGuessedLetters = function () {
+    guessedLettersOutput.innerHTML = "";
+    for (const guessedLetter of guessedLetters) {
+        const li = document.createElement("li");
+        guessedLettersOutput.append(li);
+        li.innerText = guessedLetter;
+    }
+};
 
+/*Change placeholders to reveal letter as it is guessed*/
+const updateWordInProgress = function (guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const showWord = [];
+    for (const letter of wordArray) {
+        if (guessedLetters.includes(letter)) {
+            showWord.push(letter.toUpperCase());
+            
+        } else {
+            showWord.push("●");
+            
+        }
+    } 
+    wordInProgress.innerText = showWord.join("");
+    playerWon();
+};
+
+/*Reveal a winning message once the word is guessed*/
+const playerWon = function (){
+    if (word.toUpperCase() === wordInProgress.innerText) {
+            message.classList.add("win");
+            message.innerHTML =  `<p class="highlight">You guessed correct the word! Congrats!</p>`;
+    }
+};

@@ -27,7 +27,6 @@ const getWord = async function () {
 };
 
 
-
 /*Create placeholders for letters of word*/
 const blankWord = function (word) {
     /*the letters of the word become an array*/
@@ -99,7 +98,7 @@ const makeGuess = function (letterInput) {
         showGuessedLetters();
         countGuessesRemaining(letterInput);
         updateWordInProgress(guessedLetters);
-        getWord();
+        //getWord();
     }
 };
 
